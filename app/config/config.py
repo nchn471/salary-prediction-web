@@ -1,7 +1,7 @@
-RAW_DATA_PATH = "../dataset/survey_results_public.csv"
-DATA_PATH = "../dataset/clean_data.csv"
+RAW_DATA_PATH = "./dataset/survey_results_public.csv"
+DATA_PATH = "./dataset/clean_data.csv"
 
-CKPT_PATH = "../dataset/best_model.joblib"
+CKPT_PATH = "./dataset/best_model.joblib"
 
 FEATURE_LIST = ['RemoteWork', 'EdLevel', 'YearsCodePro', 'DevType', 'Country', 'Age',
               'Language', 'Database', 'Platform', 'ToolsTech', 'CollabTool','Salary']

@@ -20,7 +20,7 @@ def show_intro_page():
             """
             )
         with col2:
-            lottie2 = load_lottiefile("./static/intro.json")
+            lottie2 = load_lottiefile("./app/static/intro.json")
             st_lottie(lottie2,key='intro',height=300,width=400)
 
     st.divider()

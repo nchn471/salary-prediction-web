@@ -31,7 +31,7 @@ def show_predict_page():
             """
             )
         with col2:
-            lottie2 = load_lottiefile("./static/pred.json")
+            lottie2 = load_lottiefile("./app/static/pred.json")
             st_lottie(lottie2,key='place',height=300,width=400)
 
     st.divider()

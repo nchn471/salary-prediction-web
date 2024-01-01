@@ -33,7 +33,7 @@ def load_lottiefile(filepath: str):
 with st.sidebar:
     selected = option_menu('Menu', ["Intro", 'Explore','Predict','About'], 
         icons=['play-btn','graph-up','search', 'info-circle'],menu_icon='intersect', default_index=0)
-    lottie = load_lottiefile("./static/sidebar.json")
+    lottie = load_lottiefile("./app/static/sidebar.json")
     st_lottie(lottie,key='sidebar')
 
 

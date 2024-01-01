@@ -113,7 +113,7 @@ def show_explore_page():
             """
             )
         with col2:
-            lottie2 = load_lottiefile("./static/explore.json")
+            lottie2 = load_lottiefile("./app/static/explore.json")
             st_lottie(lottie2,key='explore',height=300,width=400)
 
     st.divider()

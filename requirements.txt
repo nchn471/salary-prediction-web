@@ -1,0 +1,8 @@
+scikit-learn
+numpy
+pandas
+matplotlib
+streamlit
+jolib 
+streamlit_lottie
+streamlit_option_menu

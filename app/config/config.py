@@ -61,4 +61,7 @@ COLUMNS = ['RemoteWork', 'EdLevel', 'YearsCodePro', 'DevType', 'Country', 'Age',
        'Pip', 'Webpack', 'Yarn', 'Homebrew', 'Other ToolsTech', 'Vim',
        'Visual Studio Code', 'IntelliJ IDEA', 'Android Studio', 'Notepad++',
        'Visual Studio', 'Other CollabTool']
-CURRENCY = ['USD','VND']
+CURRENCY = ['USD','VND', 'EUR','GBP']
+
+CURRENCY_RATES = {'USD': 1.0, 'EUR': 0.9372071227741331, 'GBP': 0.8168228678537958, 'VND' : 24335.00}
+CURRENCY_SYMBOLS = {'USD': '$', 'EUR': '€', 'GBP': '£', 'VND' : '₫'}

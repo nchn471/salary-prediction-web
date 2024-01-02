@@ -11,52 +11,37 @@ def show_about_page():
     """, unsafe_allow_html=True)
     
 
-    st.title('Data')
-    #st.subheader('All data for this project was publicly sourced from:')
-    col1,col2,col3=st.columns(3)
-    col1.subheader('Source')
-    col2.subheader('Description')
-    col3.subheader('Link')
-    with st.container():
-        col1,col2,col3=st.columns(3)
-        #col1.image('census_graphic.png',width=150)
-        col1.write(':blue[U.S. Census Bureau]')
-        col2.write('Demographic, housing, industry at zip level')
-        #col2.write('American Community Survey, 5-Year Profiles, 2021, datasets DP02 - DP05')
-        col3.write('https://data.census.gov/')
-    
-    with st.container():
-        col1,col2,col3=st.columns(3)
-        #col1.image('cdc.png',width=150)
-        col1.write(':blue[Centers for Disease Control and Prevention]')
-        col2.write('Environmental factors at county level')
-        col3.write('https://data.cdc.gov/')
-    
-    with st.container():
-        col1,col2,col3=st.columns(3)
-        #col1.image('hud.png',width=150)\
-        col1.write(':blue[U.S. Dept Housing and Urban Development]')
-        col2.write('Mapping zip to county')
-        col3.write('https://www.huduser.gov/portal/datasets/')
+    st.title('About project')
 
-    with st.container():
-        col1,col2,col3=st.columns(3)
-        #col1.image('ods.png',width=150)
-        col1.write(':blue[OpenDataSoft]')
-        col2.write('Mapping zip to USPS city')
-        col3.write('https://data.opendatasoft.com/pages/home/')
-    
+    st.markdown("##### Predicting developer's salary from Stack Overflow Developer Survey 2023 (https://insights.stackoverflow.com/survey)")
+    st.markdown("##### This is the project we've chosen for the final assignment in the Python for Data Science course")
+
     st.divider()
     
-    st.title('Creator')
-    with st.container():
-        col1,col2=st.columns(2)
-        col1.write('')
-        col1.write('')
-        col1.write('')
-        col1.write('**Name:**    Kevin Soderholm')
-        col1.write('**Education:**    M.S. Applied Statistics')
-        col1.write('**Experience:**    8 YOE in Data Science across Banking, Fintech, and Retail')
-        col1.write('**Contact:**    kevin.soderholm@gmail.com or [linkedin](https://www.linkedin.com/in/kevin-soderholm-67788829/)')
-        col1.write('**Thanks for stopping by!**')
-        # col2.image('kevin8.png')
+    st.title('Our team')
+    st.markdown('##### We are student of **Ho Chi Minh University of Science** ')
+    st.markdown('##### Major: **Data Science** | Class: **21KDL1**')
+    l, r = st.columns((4,6))
+
+    with l:
+        with st.container():
+            st.divider()
+            col1,col2 = st.columns(2)
+            with col1:
+                st.subheader('FULL NAME')
+                st.write('##### Nguyễn Công Hoài Nam')
+                st.write('##### Lê Nguyễn Hoàng Uyên')
+                st.write('##### Trần Thị Uyên Nhi')
+                st.write('##### Huỳnh Công Đức')
+
+            with col2:
+                st.subheader('ID')
+                st.write('##### 21280099')
+                st.write('##### 21280xxx')
+                st.write('##### 21280xxx')
+                st.write('##### 21280xxx')
+
+    with r:
+        st.image('./app/static/hcmus.png', width=350)
+
+

@@ -6,6 +6,7 @@ from config import config
 import json
 
 
+
 st.cache()
 def load_model():
     return joblib.load(config.CKPT_PATH)
@@ -14,6 +15,16 @@ def load_model():
 def load_lottiefile(filepath: str):
     with open(filepath,"r") as f:
         return json.load(f)
+
+def convert_currency(amount, to_currency):
+    rounded_amount = round(amount * config.CURRENCY_RATES[to_currency], 3)
+    if to_currency == 'VND':
+        return "{:,.3f}".format(rounded_amount) + ' ' + config.CURRENCY_SYMBOLS[to_currency]
+    else:
+        return config.CURRENCY_SYMBOLS[to_currency] + "{:,.3f}".format(rounded_amount)
+
+
+
 
 def show_predict_page():
     model = load_model()
@@ -32,7 +43,7 @@ def show_predict_page():
             )
         with col2:
             lottie2 = load_lottiefile("./app/static/pred.json")
-            st_lottie(lottie2,key='place',height=300,width=400)
+            st_lottie(lottie2,key='pred',height=300,width=400)
 
     st.divider()
 
@@ -68,7 +79,7 @@ def show_predict_page():
         YearsCodePro = 0.5
     YearsCodePro = float(YearsCodePro)
 
-    st.markdown("## Show more features:")
+    st.markdown("## Show more features")
 
     with st.expander('Hide/unhide'):
 
@@ -118,24 +129,34 @@ def show_predict_page():
         if CollabToolHaveWorkedWith:
             for tool in CollabToolHaveWorkedWith:
                 collab_tools[config.COLLAB_TOOLS.index(tool)] = 1
-    st.divider()
+
 
     INPUTS = [RemoteWork] + [EdLevel] + [YearsCodePro] + [DevType] + [Country] + [Age] + languages + databases + platforms + tools_tech + collab_tools 
     INPUTS = [INPUTS]
     input_df = pd.DataFrame(INPUTS, columns=config.COLUMNS)
 
 
-    predict_flag = st.button("Show Predict", type = 'primary')
+    # predict_flag = st.button("Show Predict", type = 'primary')
 
-    if predict_flag:
-        tab1, tab2 = st.tabs(['Minimal','Detail'])
-        with tab1:
-                pred = model.predict(input_df)
-                st.metric("Prediction", '{:,.3f} $'.format(pred[0]))
-        with tab2:
-            col1, col2 = st.columns(2)
-            currency = col1.selectbox("Choose currency you wan to display",config.CURRENCY)
-            per = col2.selectbox("Per month/year",['Month','Year',])
+    # if predict_flag:
+    st.divider()
+    l,r = st.columns(2)
+    with l:
+        st.title('Predict result')
+        currency = st.selectbox("Choose currency you want to dislay",config.CURRENCY)
+        pred = model.predict(input_df)
+        salary_month = convert_currency(float(pred/12),currency)
+        salary_year = convert_currency(float(pred),currency)
 
+        if currency:
+        
+            st.subheader("Your salary's prediction")
+            col1,col2 = st.columns(2)
+            col1.metric("Per month",salary_month)
+            col2.metric("Per year", salary_year)
+    with r:
+        lottie2 = load_lottiefile("./app/static/pred2.json")
+        st_lottie(lottie2,key='pred2',height=300,width=400)
+    # st.divider()
+        
 
-    

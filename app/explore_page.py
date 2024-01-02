@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from streamlit_lottie import st_lottie
 from config import config
+import seaborn as sns
 import json
 
 
@@ -10,93 +11,206 @@ import json
 def load_lottiefile(filepath: str):
     with open(filepath,"r") as f:
         return json.load(f)
-
-# def shorten_categories(categories, cutoff):
-#     categorical_map = {}
-#     for i in range(len(categories)):
-#         if categories.values[i] >= cutoff:
-#             categorical_map[categories.index[i]] = categories.index[i]
-#         else:
-#             categorical_map[categories.index[i]] = 'Other'
-#     return categorical_map
-
-
-# def clean_experience(x):
-#     if x ==  'More than 50 years':
-#         return 50
-#     if x == 'Less than 1 year':
-#         return 0.5
-#     return float(x)
-
-
-# def clean_education(x):
-#     if 'Bachelor’s degree' in x:
-#         return 'Bachelor’s degree'
-#     if 'Master’s degree' in x:
-#         return 'Master’s degree'
-#     if 'Professional degree' in x or 'Other doctoral' in x:
-#         return 'Post grad'
-#     return 'Less than a Bachelors'
-
-
-# @st.cache_data
-# def load_data():
-#     df = pd.read_csv("dataset/survey_results_public.csv")
-#     df = df[["Country", "EdLevel", "YearsCodePro", "Employment", "ConvertedCompYearly"]]
-#     df = df[df["ConvertedCompYearly"].notnull()]
-#     df = df.dropna()
-#     df = df[df["Employment"] == "Employed, full-time"]
-#     df = df.drop("Employment", axis=1)
-
-#     country_map = shorten_categories(df.Country.value_counts(), 400)
-#     df["Country"] = df["Country"].map(country_map)
-#     df = df[df["ConvertedCompYearly"] <= 250000]
-#     df = df[df["ConvertedCompYearly"] >= 10000]
-#     df = df[df["Country"] != "Other"]
-
-#     df["YearsCodePro"] = df["YearsCodePro"].apply(clean_experience)
-#     df["EdLevel"] = df["EdLevel"].apply(clean_education)
-#     df = df.rename({"ConvertedCompYearly": "Salary"}, axis=1)
-#     return df
-
-# df = load_data()
-
-# def show_explore_page():
-#     st.title("Explore Software Engineer Salaries")
-
-#     st.write(
-#         """
-#     ### Stack Overflow Developer Survey 2020
-#     """
-#     )
-
-#     data = df["Country"].value_counts()
-
-#     fig1, ax1 = plt.subplots()
-#     ax1.pie(data, labels=data.index, autopct="%1.1f%%", shadow=True, startangle=90)
-#     ax1.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-#     st.write("""#### Number of Data from different countries""")
-
-#     st.pyplot(fig1)
     
-#     st.write(
-#         """
-#     #### Mean Salary Based On Country
-#     """
-#     )
+@st.cache_data
+def load_data():
+    df = pd.read_csv(config.DATA_PATH)
+    return df
 
-#     data = df.groupby(["Country"])["Salary"].mean().sort_values(ascending=True)
-#     st.bar_chart(data)
+def plot_age(df):
+    age = df["Age"].value_counts()
+    age_df = age.to_frame()
+    labels = age.index
+    values = age.values
 
-#     st.write(
-#         """
-#     #### Mean Salary Based On Experience
-#     """
-#     )
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=age_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
 
-#     data = df.groupby(["YearsCodePro"])["Salary"].mean().sort_values(ascending=True)
-#     st.line_chart(data)
+st.cache()
+def plot_remotework(df):
+    remotework = df["RemoteWork"].value_counts()
+    remotework_df = remotework.to_frame()
+    labels = remotework.index
+    values = remotework.values
+
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=remotework_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+
+st.cache()
+def plot_edlevel(df):
+    edlevel = df["EdLevel"].value_counts()
+    edlevel_df = edlevel.to_frame()
+    labels = edlevel.index
+    values = edlevel.values
+
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=edlevel_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+
+st.cache()
+def plot_country(df):
+    country = df["Country"].value_counts()
+    country_df = country.to_frame()
+    labels = country.index
+    values = country.values
+
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=country_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+
+st.cache()
+def plot_yearscodepro(df):
+    fig = plt.figure(figsize=(9, 7))
+    ax = sns.histplot(data=df, x="YearsCodePro", hue="EdLevel", kde=True, bins=30)
+    sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+    st.pyplot(fig)
+
+    fig = plt.figure(figsize=(9, 7))
+    ax = sns.histplot(data=df, x="YearsCodePro", hue="RemoteWork", kde=True, bins=30)
+    sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+    st.pyplot(fig)
+
+def plot_devtype(df):
+    type = df["DevType"]
+    type_df = type.to_frame()
+    labels = type.index
+    values = type.values
+
+
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=type_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+
+def plot_programlang(df):
+    lang = df[config.LANGUAGE]
+    lang_sum = lang.sum().sort_values(ascending=False)
+    lang_df = lang_sum.to_frame()
+
+    labels = lang_sum.index
+    values = lang_sum.values
+
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=lang_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+
+def plot_platform(df): 
+    platform = df[config.PLATFORM]
+    platform_sum = platform.sum().sort_values(ascending=False)
+    platform_df = platform_sum.to_frame()
+
+    labels = platform_sum.index
+    values = platform_sum.values
+
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=platform_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+
+def plot_tools(df):
+    tools = df[config.TOOLS_TECH]
+    tools_sum = tools.sum().sort_values(ascending=False)
+    tools_df = tools_sum.to_frame()
+
+    labels = tools_sum.index
+    values = tools_sum.values
+
+    col1, col2 = st.columns(2)
+    
+    with col1: 
+        # st.bar_chart(x=labels, y=values)
+        st.bar_chart(data=tools_df)
+    with col2:
+        fig, ax = plt.subplots()
+        patches, texts, autotexts = ax.pie(values, labels=labels, autopct='%.0f%%')
+        plt.setp(texts, color='white')  
+        plt.setp(autotexts, color='white')  
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+
+def plot_salary(df):
+    fig = plt.figure(figsize=(9, 7))
+    ax = sns.boxplot(data=df, x="Country", y="Salary")
+    plt.xticks(rotation=90)
+    st.pyplot(fig)
+
+    fig = plt.figure(figsize=(9, 7))
+    ax = sns.histplot(data=df, x="Salary", hue="EdLevel", kde=True)
+    sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+    st.pyplot(fig)
+
+    fig = plt.figure(figsize=(9, 7))
+    ax = sns.histplot(data=df, x="Salary", hue="Age", kde=True)
+    sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+    st.pyplot(fig)
+
+    fig = plt.figure(figsize=(9, 7))
+    ax = sns.histplot(data=df, x="Salary", hue="RemoteWork", kde=True)
+    sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+    st.pyplot(fig)
 
 def show_explore_page():
     with st.container():
@@ -115,5 +229,40 @@ def show_explore_page():
         with col2:
             lottie2 = load_lottiefile("./app/static/explore.json")
             st_lottie(lottie2,key='explore',height=300,width=400)
+
+    df = load_data()
+    st.dataframe(df)
+    st.header("Data Visualization :bar_chart:")
+    st.write("Visualize Stack Overflow Annual Survey 2022 processed")
+    
+    st.markdown("## Age :birthday:")
+    plot_age(df)
+
+    st.markdown("## Remote Work :airplane_departure:")
+    plot_remotework(df)
+
+    st.markdown("## Education Level :female-teacher:")
+    plot_edlevel(df)
+
+    st.markdown("## Country :flag-vn:")
+    plot_country(df)
+
+    st.markdown("## Years of Experience :calendar:")
+    plot_yearscodepro(df)
+    
+    st.markdown("## Developer Type :computer:")
+    # plot_devtype(df)
+
+    st.markdown("## Programming Language :snake:")
+    plot_programlang(df)
+
+    st.markdown("## Platform :cloud:")
+    plot_platform(df)
+
+    st.markdown("## Tools :whale:")
+    plot_tools(df)
+
+    st.markdown("## Salary :money_with_wings:")
+    plot_salary(df)
 
     st.divider()

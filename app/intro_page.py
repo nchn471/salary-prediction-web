@@ -16,7 +16,7 @@ def show_intro_page():
             st.markdown(
             """    
             ## Predict developer's salary 
-            ### _Select features below_
+            ### _Please select the function_
             """
             )
         with col2:
@@ -24,4 +24,6 @@ def show_intro_page():
             st_lottie(lottie2,key='intro',height=300,width=400)
 
     st.divider()
+
+
         
